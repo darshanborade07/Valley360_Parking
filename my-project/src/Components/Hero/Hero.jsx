@@ -3,7 +3,7 @@ import {IoBagHandleOutline} from 'react-icons/io5'
 import Image from "../../Images/Bg-clg.jpg";
 import LOGO from '../../Images/logo.jpeg';
 import {motion} from "framer-motion";
-import { FadeRight } from '../../utility/animation';
+import { FadeRight } from '../Annimations/annimation';
 
 const Hero = () => {
   return (

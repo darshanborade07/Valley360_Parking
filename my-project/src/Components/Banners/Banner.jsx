@@ -1,7 +1,7 @@
 import React from 'react'
 import BannerPng from "../../assets/Banner.png";
 import {motion} from "framer-motion";
-import {FadeUp} from "../../utility/animation";
+import {FadeUp} from "../Annimations/annimation";
 
 const Banner = () => {
   return (

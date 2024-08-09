@@ -2,6 +2,9 @@ import React from 'react'
 import { LuParkingCircle } from "react-icons/lu";
 import {motion} from 'framer-motion'
 
+
+
+
 const NavbarMenu = [
 
     {
@@ -12,17 +15,17 @@ const NavbarMenu = [
     {
         id: 2,
         title: "Admin",
-        link:"#",
+        link:"/Login1",
     },
     {
         id: 3,
         title: "About Us",
-        link:"#",
+        link:"/AboutUs",
     },
     {
         id: 4,
         title: "Login",
-        link:"#",
+        link:"/Login",
     },
 
 ];
