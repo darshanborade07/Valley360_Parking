@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState , useEffect} from 'react'
+import axios from 'axios';
 
 const BookParking = () => {
     const [formData, setFormData] = useState({
@@ -7,6 +8,7 @@ const BookParking = () => {
         vehicleType: 'CAR',
         parkingHours: 1,
         price: 0.0,
+        
       });
     
       const handleChange = (e) => {
@@ -67,9 +69,9 @@ const BookParking = () => {
               required
               className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="CAR">Car</option>
-              <option value="MOTORCYCLE">Motorcycle</option>
-              <option value="TRUCK">Truck</option>
+              <option value="TWO_WHEELER">Car</option>
+              <option value="TWO_WHEELER">Motorcycle</option>
+              
             </select>
             <label htmlFor="parkingHours" className="block text-gray-700 font-medium mb-2">
               Parking Hours:

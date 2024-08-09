@@ -3,12 +3,23 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import NavbarUser from './NavbarUser';
 
 const UserDashboard = () => {
   const [parkingAreas, setParkingAreas] = useState([]);
   const [userLocation, setUserLocation] = useState({ lat: null, lng: null });
   const navigate = useNavigate();
+  const [user, setUser] = useState(null); // Initialize user state
 
+  useEffect(() => {
+    // Retrieve the user object from sessionStorage
+    const storedUser = sessionStorage.getItem('user');
+    
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+    }
+  }, []);
   useEffect(() => {
     const fetchParkingAreas = async () => {
       if (navigator.geolocation) {
@@ -51,6 +62,8 @@ const UserDashboard = () => {
   };
 
   return (
+    <div>
+      <NavbarUser></NavbarUser>
     <div className="min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white p-6">
       <ToastContainer position="top-center" />
       <div className="container mx-auto">
@@ -78,6 +91,7 @@ const UserDashboard = () => {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 };

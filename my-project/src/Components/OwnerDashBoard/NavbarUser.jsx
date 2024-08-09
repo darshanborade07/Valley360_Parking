@@ -14,28 +14,20 @@ const NavbarMenu = [
     },
     {
         id: 2,
-        title: "Admin",
+        title: "Profile",
         link:"/Login1",
     },
+    
     {
         id: 3,
-        title: "About Us",
-        link:"/AboutUs",
-    },
-    {
-        id: 4,
-        title: "Login",
-        link:"/Login",
-    },
-    {
-        id: 4,
-        title: "Register",
-        link:"/SignUp",
+        title: "Update Profile",
+        link:"/Update",
     },
 
 ];
    
-const Navbar = () => {
+const NavbarUser = () => {
+    
   return (
     
    <nav >
@@ -74,4 +66,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default NavbarUser

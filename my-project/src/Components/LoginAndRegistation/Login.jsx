@@ -38,6 +38,9 @@ const Login = () => {
       console.error('Login error:', error);
     }
   };
+  const RegisterNow = () => {
+    navigate(`/SignUp`); // Navigate to booking page with Slot ID
+  };
 
   return (
     <div
@@ -115,13 +118,19 @@ const Login = () => {
               </a>
             </div>
           </div>
+          <div className='grid grid-cols-2 gap-5'>
+          <button
+            type="submit"
+            className="w-full text-[18px] mt-6 rounded bg-blue-500  py-1 pc-2 hover:bg-blue-600 transition-colors duration-300 text-white"
+          >Login
+          </button>
 
           <button
             type="submit"
-            className="w-full text-[18px] mt-6 rounded bg-blue-500 py-2 hover:bg-blue-600 transition-colors duration-300 text-white"
-          >
-            Login
+            className="w-full text-[18px] mt-6 rounded bg-blue-500 py-2 hover:bg-blue-600 transition-colors duration-300 text-white"  onClick={()=>RegisterNow()}
+          >Register
           </button>
+          </div>
         </form>
       </div>
     </div>

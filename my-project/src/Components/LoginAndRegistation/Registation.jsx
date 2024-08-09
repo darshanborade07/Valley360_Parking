@@ -55,9 +55,9 @@ const Registration = () => {
       }}
     >
       <div className='container mx-auto'>
-        <div className='flex w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden p-8'>
+        <div className='flex  w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden p-8'>
           <div 
-            className='w-1/2 bg-cover flex flex-col items-center justify-center py-20 bg-no-repeat bg-center w-full ' 
+            className='w-1/2 bg-cover flex flex-col items-center justify-center py-12 bg-no-repeat bg-center ' 
             style={{
               backgroundImage: `url(${backgroundImage})`, // Apply the imported image
             }}
