@@ -1,7 +1,6 @@
 import React from 'react'
 import { LuParkingCircle } from "react-icons/lu";
-import {MdMenu} from "react-icons/md"
-
+import {motion} from 'framer-motion'
 
 const NavbarMenu = [
 
@@ -22,29 +21,29 @@ const NavbarMenu = [
     },
     {
         id: 4,
-        title: "Contact us",
+        title: "Login",
         link:"#",
     },
 
 ];
    
-
-
-
 const Navbar = () => {
   return (
-    <>
+    
    <nav >
-    <div className="container flex justify-evenly items-center- py-4 md:pt-4">
+    <motion.div 
+    initial={{opacity:0}}
+    animate={{opacity:1}}
+    transition={{duration:0.5, delay:0.5}}
+    
+    className="container flex justify-between items-center- py-4 md:pt-4 gap-14">
         {/*  Logo section */}
-        <div className='text-2xl flex items-center gap-2 font-bold uppercase '>
-        <p className="text-primary">Valle</p>
-        <p className="text-secondary">360</p>
-        <p className="text-primary" >Parking</p>
-        <LuParkingCircle className='text-green-600'/>
+        <div className='text-2xl flex items-center gap-2 font-bold uppercase'>
+        <p className="text-primary">Valley<span className='text-secondary'>360</span></p>
+        <p className="text-primary">Parking</p>
+       
+        <LuParkingCircle className='text-green-700'/>
         </div>
-
-
 
         <div className='hidden md:block'>
             <ul className='flex items-center gap-6 text-gray-600'>
@@ -59,18 +58,10 @@ const Navbar = () => {
             </ul>
             
         </div>
-       
-       
-        
-    </div>
-
-
+           
+    </motion.div>
 
    </nav>
-
-
-  
-   </>
 
   )
 }
