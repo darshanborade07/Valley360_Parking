@@ -1,9 +1,20 @@
 import React from 'react'
 import {IoBagHandleOutline} from 'react-icons/io5'
+<<<<<<< HEAD
 import Image from "../../Images/Bg-clg.jpg";
 import LOGO from '../../Images/logo.jpeg';
 import {motion} from "framer-motion";
 import { FadeRight } from '../../utility/animation';
+=======
+import Image1 from "../../../Images/Bg-clg.jpg";
+import LOGO from '../../../Images/logo.jpeg';
+import {motion} from "framer-motion";
+import { FadeRight } from '../../utility/annimation';
+
+
+
+
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
 
 const Hero = () => {
   return (
@@ -11,19 +22,29 @@ const Hero = () => {
     {/*Brand Info */}
     <div className='flex flex-col justify-center py-50 md:py-0 relative z-10'>
         <div className='text-center md:text-left space-y-30 lg:max-w-[1000px]'>
+<<<<<<< HEAD
 
+=======
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
             <motion.h1
             variants={FadeRight(0.6)}
             initial="hidden"
             animate="visible"
              className='text-5xl lg:text-16xl font-bold leading-relaxed xl:leading-loose font-averia'>Find the Perfect Parking
             <br /><span className='text-secondary'> Anywhere  </span> <label className='text-primary'>Anytime!</label></motion.h1>
+<<<<<<< HEAD
             
+=======
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
             <motion.p
             variants={FadeRight(0.9)}
             initial="hidden"
             animate="visible"
+<<<<<<< HEAD
             className='text-2xl tracking-wide'> Discover a new era of parking convenience with<br/><span>Valley360 Parking.</span>  </motion.p>
+=======
+            className='text-2xl tracking-wide'> Discover a new era of parking convenience with Valley360 Parking. </motion.p>
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
             
             <motion.p
             variants={FadeRight(1.2)}
@@ -45,15 +66,25 @@ const Hero = () => {
         
     </div>
      {/* Hero Image*/}
+<<<<<<< HEAD
             <div className='flex flex-col justify-center ml-10'>
+=======
+            <div className='flex flex-col justify-center'>
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
                 <motion.img 
                 initial={{opacity:0, x:200, rotate:75}}
                 animate={{opacity:1, x:0, rotate:0}}
                 transition={{duration:1, delay:0.2}}
+<<<<<<< HEAD
                 src={Image} alt='' className='w-[350px] ms:w=[550px] drop-shadow md:px-10'></motion.img>
             </div>
             
             <div className='absolute left-80 top-10  bottom-00 10md:top-0 right-2/3 blur-sm opacity-40 rotate-[40deg]'>
+=======
+                src={Image1} alt='' className='w-[350px] ms:w=[550px] drop-shadow'></motion.img>
+            </div>
+            <div className='absolute left-80 top-10  bottom-00 10md:top-0 right-2/3 blur-sm  opacity-40 rotate-[40deg]'>
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
                 <motion.img 
                 initial={{opacity:0, y:-200, rotate:75}}
                 animate={{opacity:1, y:0, rotate:0}}

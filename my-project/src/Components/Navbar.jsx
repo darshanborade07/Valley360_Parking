@@ -1,5 +1,9 @@
 import React from 'react'
 import { LuParkingCircle } from "react-icons/lu";
+<<<<<<< HEAD
+=======
+import {MdMenu, MdOutlineShoppingCart} from "react-icons/md"
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
 import {motion} from 'framer-motion'
 
 const NavbarMenu = [
@@ -36,9 +40,15 @@ const Navbar = () => {
     animate={{opacity:1}}
     transition={{duration:0.5, delay:0.5}}
     
+<<<<<<< HEAD
     className="container flex justify-between items-center- py-4 md:pt-4 gap-14">
         {/*  Logo section */}
         <div className='text-2xl flex items-center gap-2 font-bold uppercase'>
+=======
+    className="container flex justify-evenly items-center- py-4 md:pt-4">
+        {/*  Logo section */}
+        <div className='text-2xl flex items-center gap-2 font-bold uppercase '>
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
         <p className="text-primary">Valley<span className='text-secondary'>360</span></p>
         <p className="text-primary">Parking</p>
        
@@ -58,11 +68,27 @@ const Navbar = () => {
             </ul>
             
         </div>
+<<<<<<< HEAD
            
     </motion.div>
 
    </nav>
 
+=======
+       
+       
+        
+    </motion.div>
+
+
+
+   </nav>
+
+
+  
+   
+
+>>>>>>> dcedbb1498a1ebac0865668e593d4ca7dde1dd7d
   )
 }
 
