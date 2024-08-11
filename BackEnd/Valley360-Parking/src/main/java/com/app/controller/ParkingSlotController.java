@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.ParkingSlotDTO;
@@ -35,5 +36,11 @@ public class ParkingSlotController {
         List<ParkingSlotDTO> parkingSlots = parkingSlotService.getParkingSlotsByParkingArea(parkingAreaId);
         return ResponseEntity.ok(parkingSlots);
     }
+	
+	@GetMapping("/sortBy")
+	public ResponseEntity<List<ParkingSlotDTO>> getAllParkingSlots(@RequestParam(defaultValue = "city") String sortBy) {
+	    List<ParkingSlotDTO> parkingSlots = parkingSlotService.getAllParkingSlotsSorted(sortBy);
+	    return ResponseEntity.ok(parkingSlots);
+	}
 	
 }

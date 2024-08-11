@@ -9,7 +9,15 @@ import com.app.entities.ParkingSlot;
 
 public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, Long> {
 
-//	@Query("SELECT * FROM ParkingSlot where parking")
-//	public List<ParkingSlot> getParkingSlots();
+//	@Query("SELECT ps FROM ParkingSlot ps ORDER BY ps.city ASC")
+//	List<ParkingSlot> findAllSortedByCity();
+	
+	@Query("SELECT ps FROM ParkingSlot ps ORDER BY ps.price ASC")
+	List<ParkingSlot> findAllSortedByPriceAsc();
+	
+	// Sorting by Area (Nested Query)
+	@Query("SELECT ps FROM ParkingSlot ps JOIN FETCH ps.parking pa ORDER BY pa.city ASC")
+	List<ParkingSlot> findAllByOrderByCityAsc();
+
 	
 }

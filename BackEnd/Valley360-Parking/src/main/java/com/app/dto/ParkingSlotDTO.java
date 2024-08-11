@@ -9,15 +9,26 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
+@Getter
+@Setter
 @ToString
-public class ParkingSlotDTO extends BaseDTO {
-
+public class ParkingSlotDTO {
+	
+	private Long id;
 	private VehicleType vehicleType;
 	private Status status;
 	private double price;
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private Long parkingId;
+	
+	public ParkingSlotDTO() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ParkingSlotDTO(Long id, Long parkingId) {
+		this.id = id;
+		this.parkingId = parkingId;
+	}
+	
 	public VehicleType getVehicleType() {
 		return vehicleType;
 	}
@@ -36,15 +47,18 @@ public class ParkingSlotDTO extends BaseDTO {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public Long getParkingId() {
 		return parkingId;
 	}
 	public void setParkingId(Long parkingId) {
 		this.parkingId = parkingId;
 	}
-	
-	
-	
 	
 	
 }

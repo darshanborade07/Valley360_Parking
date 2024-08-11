@@ -1,6 +1,8 @@
 package com.app.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,10 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.app.enums.BookingStatus;
 import com.app.enums.VehicleType;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -21,12 +24,24 @@ import lombok.ToString;
 
 @ToString
 public class Booking extends BaseEntity{
+	
+	@CreationTimestamp
+	private LocalDate bookingDate;
 
-	private LocalDateTime date;
+	private LocalDateTime arrivalDate;
+	
+	private LocalDateTime departureDate;
+
 	private String vehicleNo;
+	
 	@Enumerated(EnumType.STRING)
 	private VehicleType VehicleType;
+	
+	@Enumerated(EnumType.STRING)
+	private BookingStatus status;
+	
 	private int parkingHours;
+	
 	private double price;
 	
 	@ManyToOne
@@ -41,21 +56,41 @@ public class Booking extends BaseEntity{
 		super();
 	}
 
-	public Booking(LocalDateTime date, String vehicleNo, VehicleType vehicleType, int parkingHours, double price) {
+	public Booking(LocalDate bookingDate, LocalDateTime arrivalDate, LocalDateTime departureDate, String vehicleNo,
+			com.app.enums.VehicleType vehicleType, BookingStatus status, int parkingHours, double price) {
 		super();
-		this.date = date;
+		this.bookingDate = bookingDate;
+		this.arrivalDate = arrivalDate;
+		this.departureDate = departureDate;
 		this.vehicleNo = vehicleNo;
 		VehicleType = vehicleType;
+		this.status = status;
 		this.parkingHours = parkingHours;
 		this.price = price;
 	}
 
-	public LocalDateTime getDate() {
-		return date;
+	public LocalDate getBookingDate() {
+		return bookingDate;
 	}
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
+	public void setBookingDate(LocalDate bookingDate) {
+		this.bookingDate = bookingDate;
+	}
+
+	public LocalDateTime getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(LocalDateTime arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	public LocalDateTime getDepartureDate() {
+		return departureDate;
+	}
+
+	public void setDepartureDate(LocalDateTime departureDate) {
+		this.departureDate = departureDate;
 	}
 
 	public String getVehicleNo() {
@@ -72,6 +107,14 @@ public class Booking extends BaseEntity{
 
 	public void setVehicleType(VehicleType vehicleType) {
 		VehicleType = vehicleType;
+	}
+
+	public BookingStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(BookingStatus status) {
+		this.status = status;
 	}
 
 	public int getParkingHours() {
@@ -105,6 +148,7 @@ public class Booking extends BaseEntity{
 	public void setParkingSlot(ParkingSlot parkingSlot) {
 		this.parkingSlot = parkingSlot;
 	}
+	
 	
 	
 }

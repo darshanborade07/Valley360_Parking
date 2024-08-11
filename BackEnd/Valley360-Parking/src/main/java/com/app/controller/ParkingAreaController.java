@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,8 +30,8 @@ public class ParkingAreaController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> addParkingArea(@RequestBody ParkingAreaDTO parking){
-		parkingAreaService.addParkingArea(parking);
-		return ResponseEntity.status(HttpStatus.OK).body("Parking area added !!");
+		ParkingArea area = parkingAreaService.addParkingArea(parking);
+		return ResponseEntity.status(HttpStatus.OK).body(area);
 	}
 	
 	@GetMapping("/nearby")
@@ -39,11 +41,29 @@ public class ParkingAreaController {
         return ResponseEntity.ok(nearbyParkingAreas);
     }
 	
-	
+	//for admin
 	@GetMapping("/byStatus")
     public ResponseEntity<List<ParkingAreaDTO>> getParkingAreasByStatus(@RequestParam String status) {
         List<ParkingAreaDTO> parkingAreas = parkingAreaService.findParkingAreaByStatus(Status.valueOf(status));
         return ResponseEntity.ok(parkingAreas);
     }
+	
+	@GetMapping("/getByOwnerId/{ownerId}")
+	public ResponseEntity<?> getParkingByOwner(@PathVariable Long ownerId){
+		ParkingArea parkingAreas = parkingAreaService.getParkingAreas(ownerId);
+		return ResponseEntity.ok(parkingAreas);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getByParkingId(@PathVariable Long id){
+		ParkingArea area = parkingAreaService.getByParkingId(id);
+		return ResponseEntity.ok(area);
+	}
+	
+	@PutMapping("/update/{id}")
+	public ResponseEntity<?> updateParkingArea(@PathVariable Long id, @RequestBody ParkingArea area){
+		ParkingArea parkArea = parkingAreaService.updateParkingArea(id,area);
+		return ResponseEntity.ok(parkArea);
+	}
 	
 }

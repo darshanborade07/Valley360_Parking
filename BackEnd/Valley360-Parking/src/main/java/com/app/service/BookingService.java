@@ -10,4 +10,8 @@ public interface BookingService {
 	void bookParkingSlot(BookingDTO booking);
 	
 	List<Booking> viewBookingHistory(Long id);
+	
+	List<BookingDTO> getTodaysBookings(Long ownerId);
+	
+	List<BookingDTO> getPreviousBookings(Long ownerId);
 }

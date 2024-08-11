@@ -108,4 +108,25 @@ public class ParkingAreaServiceImpl implements ParkingAreaService {
 	                .collect(Collectors.toList());
 	}
 
+
+	@Override
+	public ParkingArea getParkingAreas(Long ownerId) {
+		ParkingArea area = parkingAreaRepository.findByUserId(ownerId);
+		return area;
+	}
+
+
+	@Override
+	public ParkingArea getByParkingId(Long id) {
+		
+		return parkingAreaRepository.findById(id).orElseThrow(() -> new RuntimeException("Parking Id not found !!"));
+	}
+
+
+	@Override
+	public ParkingArea updateParkingArea(Long id, ParkingArea area) {
+		ParkingArea parkArea = parkingAreaRepository.findById(id).orElseThrow(() -> new RuntimeException("Parking Id not found !!"));
+		return null;
+	}
+
 }

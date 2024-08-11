@@ -30,7 +30,7 @@ public class UserController {
 	@PostMapping("/Register")
 	public ResponseEntity<?> registerUser(@RequestBody UserDTO user) {
 		userService.registerUser(user);
-		return ResponseEntity.status(HttpStatus.OK).body("User is created");
+		return ResponseEntity.status(HttpStatus.CREATED).body("User is created");
 	}
 	
 	@GetMapping("/getByEmail/{email}")

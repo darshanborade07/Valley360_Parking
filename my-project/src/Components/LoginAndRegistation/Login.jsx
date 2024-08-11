@@ -29,7 +29,7 @@ const Login = () => {
       if (loggedInUser.role.roleName === "ROLE_CUSTOMER") {
         navigate('/UserDashBoard');
       } else if (loggedInUser.role.roleName === "ROLE_OWNER") {
-        navigate('/owner');
+        navigate('/OwnerDashBoard');
       } else {
         console.log('Unrecognized user role.');
       }
@@ -113,23 +113,26 @@ const Login = () => {
             </div>
 
             <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a href="#" className="font-medium text-gray-700 hover:text-gray-800">
                 Forgot your password?
               </a>
             </div>
           </div>
-          <div className='grid grid-cols-2 gap-5'>
-          <button
+          <div className="flex justify-center items-center mt-6">
+           <button
             type="submit"
-            className="w-full text-[18px] mt-6 rounded bg-blue-500  py-1 pc-2 hover:bg-blue-600 transition-colors duration-300 text-white"
-          >Login
+            className="text-[18px] rounded bg-blue-500 py-1 px-16 hover:bg-blue-600 transition-colors
+            duration-300 text-white">
+              Login
           </button>
-
-          <button
-            type="submit"
-            className="w-full text-[18px] mt-6 rounded bg-blue-500 py-2 hover:bg-blue-600 transition-colors duration-300 text-white"  onClick={()=>RegisterNow()}
-          >Register
-          </button>
+          </div>
+          <div className="flex justify-center items-center mt-6">
+            <span className="block text-sm text-white mb-1">Don't have an account ?
+            <a href="/SignUp" className="font-medium text-white-700 hover:text-white-800">
+                Register
+              </a>
+            </span>
+            
           </div>
         </form>
       </div>

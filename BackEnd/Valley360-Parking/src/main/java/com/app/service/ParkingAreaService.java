@@ -13,4 +13,12 @@ public interface ParkingAreaService {
 	List<ParkingAreaDTO> findNearbyParking(double lon, double lat, double radius);
 	
 	List<ParkingAreaDTO> findParkingAreaByStatus(Status status);
+
+	ParkingArea getParkingAreas(Long ownerId);
+
+	ParkingArea getByParkingId(Long id);
+
+	ParkingArea updateParkingArea(Long id, ParkingArea area);
+
+	
 }

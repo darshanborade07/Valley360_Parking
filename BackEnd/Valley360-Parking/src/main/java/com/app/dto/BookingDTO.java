@@ -1,83 +1,50 @@
 package com.app.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.app.entities.ParkingSlot;
+import com.app.entities.User;
+import com.app.enums.BookingStatus;
 import com.app.enums.VehicleType;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
+@Getter
+@Setter
 @ToString
-public class BookingDTO {
+public class BookingDTO extends BaseDTO{
+	
+	@CreationTimestamp
+	private LocalDate bookingDate;
 
-	private LocalDateTime date;
+	private LocalDateTime arrivalDate;
+	
+	private LocalDateTime departureDate;
+	
 	private String vehicleNo;
+	
 	private VehicleType VehicleType;
+	
+	private BookingStatus status;
+	
 	private int parkingHours;
+	
 	private double price;
-	
-	private Long customerId;
-	
-	private Long parkingSlotId;
 
-	public LocalDateTime getDate() {
-		return date;
-	}
+	private Long customer_id;
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
-
-	public String getVehicleNo() {
-		return vehicleNo;
-	}
-
-	public void setVehicleNo(String vehicleNo) {
-		this.vehicleNo = vehicleNo;
-	}
-
-	public VehicleType getVehicleType() {
-		return VehicleType;
-	}
-
-	public void setVehicleType(VehicleType vehicleType) {
-		VehicleType = vehicleType;
-	}
-
-	public int getParkingHours() {
-		return parkingHours;
-	}
-
-	public void setParkingHours(int parkingHours) {
-		this.parkingHours = parkingHours;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public Long getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
-	}
-
-	public Long getParkingSlotId() {
-		return parkingSlotId;
-	}
-
-	public void setParkingSlotId(Long parkingSlotId) {
-		this.parkingSlotId = parkingSlotId;
-	}
-	
-	
+	private Long parking_slot_id;
 	
 }

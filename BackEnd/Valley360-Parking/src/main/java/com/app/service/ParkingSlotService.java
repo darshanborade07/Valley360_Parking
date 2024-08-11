@@ -8,8 +8,8 @@ import com.app.entities.ParkingSlot;
 public interface ParkingSlotService {
 
 	ParkingSlot addNewParkingSlot(ParkingSlotDTO slot);
-	
-	//List<ParkingSlot> viewParkingSlot(Long id);
-	
+		
 	List<ParkingSlotDTO> getParkingSlotsByParkingArea(Long parkingAreaId);
+	
+	public List<ParkingSlotDTO> getAllParkingSlotsSorted(String sortBy);
 }

@@ -1,6 +1,9 @@
 package com.app.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -37,10 +40,10 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public void bookParkingSlot(BookingDTO booking) {
 		
-		User user = userRepo.findById(booking.getCustomerId())
+		User user = userRepo.findById(booking.getCustomer_id())
 				.orElseThrow(() -> new UserNotFoundException("Invalid id !!"));
 		
-		ParkingSlot parkingSlot = parkingSlotRepo.findById(booking.getParkingSlotId())
+		ParkingSlot parkingSlot = parkingSlotRepo.findById(booking.getParking_slot_id())
 				.orElseThrow(() -> new ParkingNotFoundException("Invalid id !!"));
 		
 		
@@ -57,6 +60,40 @@ public class BookingServiceImpl implements BookingService {
 	public List<Booking> viewBookingHistory(Long id) {
 		bookingRepo.findById(id);
 		return null;
+	}
+
+//	@Override
+//	public List<BookingDTO> getTodaysBookings(Long ownerId) {
+//	    LocalDate today = LocalDate.now();
+//	    List<Booking> bookings = bookingRepo.findTodaysBookingsByOwnerId(ownerId, today);
+//	    return bookings.stream().map(book -> mapper.map(book, BookingDTO.class))
+//                .collect(Collectors.toList());
+//	}
+	@Override
+	public List<BookingDTO> getTodaysBookings(Long ownerId) {
+        LocalDate today = LocalDate.now();
+        List<Booking> bookings = bookingRepo.findTodaysBookingsByOwnerId(ownerId, today);
+        return bookings.stream().map(book -> {
+            BookingDTO dto = mapper.map(book, BookingDTO.class);
+            dto.setCustomer_id(book.getUser() != null ? book.getUser().getId() : null);
+            dto.setParking_slot_id(book.getParkingSlot() != null ? book.getParkingSlot().getId() : null);
+            return dto;
+        }).collect(Collectors.toList());
+	}
+        
+	@Override
+	public List<BookingDTO> getPreviousBookings(Long ownerId) {
+		LocalDateTime today = LocalDateTime.now();
+	    List<Booking> bookings = bookingRepo.findPreviousBookingsByOwnerId(ownerId, today);
+//	    return bookings.stream().map(book -> mapper.map(book, BookingDTO.class))
+//                .collect(Collectors.toList());
+	    
+	    return bookings.stream().map(book -> {
+	    	BookingDTO dto = mapper.map(book, BookingDTO.class);
+	    	dto.setCustomer_id(book.getUser() != null ? book.getUser().getId() : null);
+            dto.setParking_slot_id(book.getParkingSlot() != null ? book.getParkingSlot().getId() : null);
+            return dto;
+	    }).collect(Collectors.toList());
 	}
 	
 	

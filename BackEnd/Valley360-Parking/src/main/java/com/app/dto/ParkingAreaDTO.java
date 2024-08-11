@@ -18,7 +18,6 @@ public class ParkingAreaDTO extends BaseDTO{
 	private double latitude;
 	private double longitude;
 	private Status status;
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private Long ownerId;
 
 	public double getLatitude() {
