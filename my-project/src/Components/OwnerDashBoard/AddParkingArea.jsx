@@ -10,7 +10,8 @@ const AddParkingArea = () => {
   const [pincode, setPincode] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [status, setStatus] = useState('AVAILABLE'); // Assuming default status is 'ACTIVE'
+  const [status, setStatus] = useState('AVAILABLE'); // Default status
+  const [pincodeError, setPincodeError] = useState(''); // For pincode validation
 
   const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ const AddParkingArea = () => {
         (position) => {
           setLatitude(position.coords.latitude);
           setLongitude(position.coords.longitude);
+          // Optionally, you can fetch address based on coordinates here
         },
         (error) => {
           toast.error('Error getting location: ' + error.message);
@@ -30,31 +32,45 @@ const AddParkingArea = () => {
     }
   }, []);
 
+  const validatePincode = (pin) => /^\d{6}$/.test(pin);
+
   const handleAddParkingArea = async (e) => {
     e.preventDefault();
+
+    // Validate pincode
+    if (!validatePincode(pincode)) {
+      setPincodeError('Pincode must be exactly 6 digits.');
+      return;
+    } else {
+      setPincodeError('');
+    }
+
     const owner = JSON.parse(sessionStorage.getItem('user'));
-    const ownerId=owner.id;
-    if (!owner || !owner.id) {
+    const ownerId = owner?.id;
+    if (!owner || !ownerId) {
       toast.error('Owner not found in session. Please log in again.');
       return;
     }
 
     try {
-      const response = await axios.post(`http://localhost:8080/parkingArea/add`, {
+      const response = await axios.post('http://localhost:8080/parkingArea/add', {
         area,
         city,
         pincode,
         latitude,
         longitude,
         status,
-        ownerId, // Send owner ID if needed
+        ownerId,
       });
 
       if (response.status === 200) {
         const parkArea = response.data;
-        const parkAreaId = parkArea.id;
+        
+        // Store the parking area details in session storage
+        sessionStorage.setItem('parkingArea', JSON.stringify(parkArea));
+
         toast.success('Parking area added successfully!');
-        navigate('/AddParkingSlot/${parkAreaId}'); // Navigate to dashboard or relevant page
+        navigate('/AddParkingSlot'); // Navigate to dashboard or relevant page
       }
     } catch (error) {
       toast.error('Error adding parking area');
@@ -95,9 +111,10 @@ const AddParkingArea = () => {
                 type="text" 
                 value={pincode} 
                 onChange={(e) => setPincode(e.target.value)} 
-                className="mt-1 p-2 border border-gray-300 rounded-md" 
+                className={`mt-1 p-2 border border-gray-300 rounded-md ${pincodeError ? 'border-red-500' : ''}`} 
                 required
               />
+              {pincodeError && <p className="text-red-500 text-sm mt-1">{pincodeError}</p>}
             </div>
             <div className="flex flex-col">
               <label className="text-sm font-semibold text-gray-700">Latitude:</label>
@@ -106,7 +123,7 @@ const AddParkingArea = () => {
                 value={latitude} 
                 onChange={(e) => setLatitude(e.target.value)} 
                 className="mt-1 p-2 border border-gray-300 rounded-md" 
-                 
+                readOnly
               />
             </div>
             <div className="flex flex-col">
@@ -116,7 +133,7 @@ const AddParkingArea = () => {
                 value={longitude} 
                 onChange={(e) => setLongitude(e.target.value)} 
                 className="mt-1 p-2 border border-gray-300 rounded-md" 
-                 
+                readOnly
               />
             </div>
             <div className="flex flex-col">

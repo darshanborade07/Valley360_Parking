@@ -7,11 +7,14 @@ import com.app.entities.Booking;
 
 public interface BookingService {
 
-	void bookParkingSlot(BookingDTO booking);
+	
+void bookParkingSlot(BookingDTO booking);
 	
 	List<Booking> viewBookingHistory(Long id);
 	
 	List<BookingDTO> getTodaysBookings(Long ownerId);
 	
 	List<BookingDTO> getPreviousBookings(Long ownerId);
+	
+	void DeleteBySlotId(Long id);
 }

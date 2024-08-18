@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Navbar from '../Navbar';
+
+
 
 const Login1 = () => {
     const [user, setUser] = useState({ email: '', password: '' });
@@ -18,7 +21,7 @@ const Login1 = () => {
             }
         })
             .then(response => {
-                window.location.href = '/home';
+                window.location.href = '/Admin';
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -26,6 +29,9 @@ const Login1 = () => {
     };
 
     return (
+        <div>
+            <Navbar></Navbar>
+        
         <div className="bg-[url('/src/Images/Login1.jpg')] bg-center bg-cover bg-no-repeat h-[100vh] w-screen relative flex items-center">
             <div className='w-screen h-[100vh] bg-black opacity-50 absolute top-0 left-0'>
             <div className='w-screen h-[100vh] bg-black absolute top-0 left-0 flex items-center'>
@@ -72,6 +78,7 @@ const Login1 = () => {
                 </form>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

@@ -5,11 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
+
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dto.BookingDTO;
 import com.app.entities.Booking;
@@ -39,7 +40,9 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public void bookParkingSlot(BookingDTO booking) {
-		
+		System.out.println(booking.getId());
+		System.out.println(booking.getCustomer_id());
+		System.out.println(booking.getParking_slot_id());
 		User user = userRepo.findById(booking.getCustomer_id())
 				.orElseThrow(() -> new UserNotFoundException("Invalid id !!"));
 		
@@ -48,7 +51,7 @@ public class BookingServiceImpl implements BookingService {
 		
 		
 		Booking book = mapper.map(booking, Booking.class);
-		
+		System.out.println(book.getId());
 		book.setUser(user);
 		book.setParkingSlot(parkingSlot);
 		
@@ -94,6 +97,22 @@ public class BookingServiceImpl implements BookingService {
             dto.setParking_slot_id(book.getParkingSlot() != null ? book.getParkingSlot().getId() : null);
             return dto;
 	    }).collect(Collectors.toList());
+	}
+
+	@Transactional
+	@Override
+	public void DeleteBySlotId(Long id) {
+		
+		List<Booking> b=bookingRepo.findAllbyParkingSlotId(id);
+		if(b!=null) {
+		for (Booking booking : b) {
+			System.out.println("sdfghjklwertyuiopiwertyuiop");
+			bookingRepo.deleteBookingsByParkingSlotId(booking.getId());
+			System.out.println("Sussefully deleted");
+		}
+		}
+		
+		
 	}
 	
 	

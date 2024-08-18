@@ -28,7 +28,7 @@ const UpdateUserPage = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8080/User/updateUser/${user.email}`, {
+      const response = await axios.put('http://localhost:8080/User/updateUser/${user.email}', {
         firstName,
         lastName,
         contact,

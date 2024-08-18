@@ -4,14 +4,12 @@ import {motion} from 'framer-motion'
 import { useNavigate } from 'react-router-dom';
 
 
-
-
 const NavbarMenu = [
 
     {
         id: 1,
         title: "Home",
-        link:"/OwnerDashBoard",
+        link:"/Admin",
     },
     {
         id: 2,
@@ -19,32 +17,17 @@ const NavbarMenu = [
         link:"/Profile",
     },
     
-    {
-        id: 3,
-        title: "Update Profile",
-        link:"/Update",
-    },
-
-    {
-        id: 4,
-        title: "Add Parking",
-        link:"/AddParkingArea",
-    },
+    
 
 ];
    
-const NavbarOwner = () => {
-    
+const NavbarAdmin = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Clear session storage
-        sessionStorage.removeItem('user'); // Remove the owner's data from session storage
-
         // Redirect to home page
         navigate('/');
     };
-
   return (
     
    <nav className='bg-third/40'>
@@ -71,14 +54,14 @@ const NavbarOwner = () => {
                         >{menu.title}</a>
                         </li>
                     ))}
-                   <li className='text-xl'>
+                    <li className='text-xl'>
                             <button
                                 onClick={handleLogout}
                                 className='inline-block py-1 px-3 hover:text-primary hover:shadow-[0_3px_0_-1px_#ef4444] font-semibold'
                             >
                                 Logout
                             </button>
-                        </li> 
+                        </li>
             </ul>
             
         </div>
@@ -90,4 +73,4 @@ const NavbarOwner = () => {
   )
 }
 
-export default NavbarOwner
+export default NavbarAdmin;

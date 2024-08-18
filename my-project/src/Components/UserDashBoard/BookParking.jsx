@@ -3,27 +3,38 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const BookParking = () => {
-  const { parkingSlotId } = useParams(); // Get parking slot ID from the URL params
+  const { slotId } = useParams(); // Get parking slot ID from the URL params
+  console.log('Parking Slot ID:', slotId);
+
   const [formData, setFormData] = useState({
-    bookingDate: '',  // To store the current date
+    bookingDate: '',
     arrivalDate: '',
     departureDate: '',
     vehicleNo: '',
-    vehicleType: 'TWO_WHEELER', // Default value, can be changed
+    vehicleType: 'TWO_WHEELER',
     parkingHours: 1,
     price: 0.0,
-    customer_id: '', // Will be set dynamically based on the logged-in user
-    parking_slot_id: parkingSlotId, // Set from URL params
-    status: 'RESERVED', // Default status, can be changed based on logic
+    customer_id: '',
+    parking_slot_id: slotId,
+    status: 'RESERVED',
+  });
+
+  const [errors, setErrors] = useState({
+    bookingDate: '',
+    arrivalDate: '',
+    departureDate: '',
+    vehicleNo: '',
   });
 
   useEffect(() => {
-    const userId = sessionStorage.getItem('userId');
+    const user = sessionStorage.getItem('user');
+    const userId = user ? JSON.parse(user).id : null;
+    console.log(userId);
     if (userId) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         customer_id: userId,
-        bookingDate: new Date().toISOString().split('T')[0], // Set the booking date to the current date
+        bookingDate: new Date().toISOString().split('T')[0],
       }));
     }
   }, []);
@@ -42,6 +53,32 @@ const BookParking = () => {
     return price;
   };
 
+  const validateForm = () => {
+    const errors = {};
+
+    const bookingDate = new Date(formData.bookingDate);
+    const arrivalDate = new Date(formData.arrivalDate);
+    const departureDate = new Date(formData.departureDate);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+
+    if (bookingDate < today) {
+      errors.bookingDate = 'Booking date must be today or in the future.';
+    }
+
+    if (arrivalDate >= departureDate) {
+      errors.arrivalDate = 'Departure time must be after arrival time.';
+    }
+
+    if (!formData.vehicleNo.trim()) {
+      errors.vehicleNo = 'Vehicle number is required.';
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -53,14 +90,18 @@ const BookParking = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!validateForm()) {
+      return;
+    }
+
     const arrivalDateTime = new Date(formData.arrivalDate);
     const departureDateTime = new Date(formData.departureDate);
-    const hours = Math.ceil((departureDateTime - arrivalDateTime) / (1000 * 60 * 60)); // Calculate the hours difference
+    const hours = Math.ceil((departureDateTime - arrivalDateTime) / (1000 * 60 * 60));
 
     const calculatedPrice = calculatePrice(hours, formData.vehicleType);
 
     try {
-      await axios.post('http://localhost:8080/bookings', {
+      await axios.post('http://localhost:8080/booking/add', {
         ...formData,
         parkingHours: hours,
         price: calculatedPrice,
@@ -84,9 +125,11 @@ const BookParking = () => {
           id="bookingDate"
           name="bookingDate"
           value={formData.bookingDate}
-          readOnly
-          className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={handleChange}
+          className={`w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.bookingDate ? 'border-red-500' : ''}`}
         />
+        {errors.bookingDate && <p className="text-red-500 text-sm mb-4">{errors.bookingDate}</p>}
+
         <label htmlFor="arrivalDate" className="block text-gray-700 font-medium mb-2">
           Arrival Date and Time:
         </label>
@@ -97,8 +140,10 @@ const BookParking = () => {
           value={formData.arrivalDate}
           onChange={handleChange}
           required
-          className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.arrivalDate ? 'border-red-500' : ''}`}
         />
+        {errors.arrivalDate && <p className="text-red-500 text-sm mb-4">{errors.arrivalDate}</p>}
+
         <label htmlFor="departureDate" className="block text-gray-700 font-medium mb-2">
           Departure Date and Time:
         </label>
@@ -109,8 +154,10 @@ const BookParking = () => {
           value={formData.departureDate}
           onChange={handleChange}
           required
-          className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.departureDate ? 'border-red-500' : ''}`}
         />
+        {errors.departureDate && <p className="text-red-500 text-sm mb-4">{errors.departureDate}</p>}
+
         <label htmlFor="vehicleNo" className="block text-gray-700 font-medium mb-2">
           Vehicle Number:
         </label>
@@ -121,8 +168,10 @@ const BookParking = () => {
           value={formData.vehicleNo}
           onChange={handleChange}
           required
-          className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.vehicleNo ? 'border-red-500' : ''}`}
         />
+        {errors.vehicleNo && <p className="text-red-500 text-sm mb-4">{errors.vehicleNo}</p>}
+
         <label htmlFor="vehicleType" className="block text-gray-700 font-medium mb-2">
           Vehicle Type:
         </label>
@@ -137,6 +186,7 @@ const BookParking = () => {
           <option value="TWO_WHEELER">Two-Wheeler</option>
           <option value="FOUR_WHEELER">Four-Wheeler</option>
         </select>
+
         <label htmlFor="parkingHours" className="block text-gray-700 font-medium mb-2">
           Parking Hours:
         </label>
@@ -148,6 +198,7 @@ const BookParking = () => {
           readOnly
           className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+
         <label htmlFor="price" className="block text-gray-700 font-medium mb-2">
           Price:
         </label>
@@ -159,6 +210,7 @@ const BookParking = () => {
           readOnly
           className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition-colors"

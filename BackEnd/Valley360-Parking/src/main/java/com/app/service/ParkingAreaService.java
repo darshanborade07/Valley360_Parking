@@ -13,12 +13,19 @@ public interface ParkingAreaService {
 	List<ParkingAreaDTO> findNearbyParking(double lon, double lat, double radius);
 	
 	List<ParkingAreaDTO> findParkingAreaByStatus(Status status);
-
-	ParkingArea getParkingAreas(Long ownerId);
+	
+	public long countAllAreas();
+	
+	List<ParkingAreaDTO> getParkingarea();
+	
+	
+	List<ParkingArea>  getParkingAreas(Long ownerId);
 
 	ParkingArea getByParkingId(Long id);
 
 	ParkingArea updateParkingArea(Long id, ParkingArea area);
-
 	
+	void deleteByOwnerid(Long id);
+
+	void DeleteById(Long id);
 }

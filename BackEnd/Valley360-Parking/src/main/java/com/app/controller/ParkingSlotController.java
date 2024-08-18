@@ -27,6 +27,7 @@ public class ParkingSlotController {
 	
 	@PostMapping("/Add")
 	public ResponseEntity<?> addParkingSlot(@RequestBody ParkingSlotDTO parkingSlot){
+		System.out.println("in service");
 		parkingSlotService.addNewParkingSlot(parkingSlot);
 		return ResponseEntity.status(HttpStatus.OK).body("Parking slot added !!");
 	}
@@ -37,10 +38,15 @@ public class ParkingSlotController {
         return ResponseEntity.ok(parkingSlots);
     }
 	
+	@GetMapping("/GetAllParkingSlots")
+	public ResponseEntity<List<ParkingSlotDTO>> getAllParkingSlots(){
+		List<ParkingSlotDTO> Slots=parkingSlotService.getParkingSlots();
+		return ResponseEntity.ok(Slots);
+	}
+	
 	@GetMapping("/sortBy")
 	public ResponseEntity<List<ParkingSlotDTO>> getAllParkingSlots(@RequestParam(defaultValue = "city") String sortBy) {
 	    List<ParkingSlotDTO> parkingSlots = parkingSlotService.getAllParkingSlotsSorted(sortBy);
 	    return ResponseEntity.ok(parkingSlots);
 	}
-	
 }

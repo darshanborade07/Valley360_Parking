@@ -1,11 +1,11 @@
 package com.app.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,12 +16,26 @@ import lombok.ToString;
 @Setter
 @ToString
 public class User extends BaseEntity {
+	
+	@Column(length = 30, nullable = false)
 	private String email;
+	
+	@Column(length = 30,nullable = false)
 	private String password;
+	
+	@Column(name = "first_name",length = 30, nullable = false)
 	private String firstName;
+	
+	@Column(name = "last_name", length = 30,nullable = false)
 	private String lastName;
+	
+	@Column(length = 30,nullable = false)
 	private String contact;
+	
+	@Column(length = 25,nullable = false)
 	private String gender;
+	
+	@Column(length = 30,nullable = false)
 	private String address;
 
 	@OneToOne
@@ -44,73 +58,6 @@ public class User extends BaseEntity {
 		this.address = address;
 	}
 
-	// Getter and Setter for email
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	// Getter and Setter for password
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	// Getter and Setter for firstName
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	// Getter and Setter for lastName
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	// Getter and Setter for userRoles
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public String getContact() {
-		return contact;
-	}
-
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
+	
 
 }

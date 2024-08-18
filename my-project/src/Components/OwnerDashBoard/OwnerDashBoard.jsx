@@ -26,7 +26,7 @@ const OwnerDashboard = () => {
 
   const fetchTodaysBookings = async (ownerId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/bookings/today/${ownerId}`);
+      const response = await axios.get(`http://localhost:8080/booking/today/${ownerId}`);
       setTodaysBookings(response.data);
     } catch (error) {
       toast.error('Error fetching today\'s bookings');
@@ -36,7 +36,7 @@ const OwnerDashboard = () => {
 
   const fetchPreviousBookings = async (ownerId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/bookings/previous/${ownerId}`);
+      const response = await axios.get(`http://localhost:8080/booking/previous/${ownerId}`);
       setPreviousBookings(response.data);
     } catch (error) {
       toast.error('Error fetching previous bookings');

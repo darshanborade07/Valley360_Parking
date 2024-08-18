@@ -41,22 +41,12 @@ public class ParkingAreaController {
         return ResponseEntity.ok(nearbyParkingAreas);
     }
 	
-	//for admin
-	@GetMapping("/byStatus")
-    public ResponseEntity<List<ParkingAreaDTO>> getParkingAreasByStatus(@RequestParam String status) {
-        List<ParkingAreaDTO> parkingAreas = parkingAreaService.findParkingAreaByStatus(Status.valueOf(status));
-        return ResponseEntity.ok(parkingAreas);
-    }
 	
-	@GetMapping("/getByOwnerId/{ownerId}")
-	public ResponseEntity<?> getParkingByOwner(@PathVariable Long ownerId){
-		ParkingArea parkingAreas = parkingAreaService.getParkingAreas(ownerId);
-		return ResponseEntity.ok(parkingAreas);
-	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getByParkingId(@PathVariable Long id){
-		ParkingArea area = parkingAreaService.getByParkingId(id);
+	@GetMapping("/GetAllParkingArea")
+	public ResponseEntity<List<ParkingAreaDTO>> getAllParkingArea(){
+		
+		List<ParkingAreaDTO> area=parkingAreaService.getParkingarea();
 		return ResponseEntity.ok(area);
 	}
 	
@@ -65,5 +55,24 @@ public class ParkingAreaController {
 		ParkingArea parkArea = parkingAreaService.updateParkingArea(id,area);
 		return ResponseEntity.ok(parkArea);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getByParkingId(@PathVariable Long id){
+		ParkingArea area = parkingAreaService.getByParkingId(id);
+		return ResponseEntity.ok(area);
+	}
+	
+	@GetMapping("/getByOwnerId/{ownerId}")
+	public ResponseEntity<?> getParkingByOwner(@PathVariable Long ownerId){
+		List<ParkingArea> parkingAreas = parkingAreaService.getParkingAreas(ownerId);
+		return ResponseEntity.ok(parkingAreas);
+	}
+	
+	@GetMapping("/byStatus")
+    public ResponseEntity<List<ParkingAreaDTO>> getParkingAreasByStatus(@RequestParam String status) {
+        List<ParkingAreaDTO> parkingAreas = parkingAreaService.findParkingAreaByStatus(Status.valueOf(status));
+        return ResponseEntity.ok(parkingAreas);
+    }
+	
 	
 }

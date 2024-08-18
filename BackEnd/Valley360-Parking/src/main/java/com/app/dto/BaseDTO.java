@@ -10,7 +10,6 @@ import lombok.ToString;
 @ToString
 public class BaseDTO {
 	
-	@JsonProperty(access = Access.READ_ONLY)
 	private Long id;
 
 	public Long getId() {

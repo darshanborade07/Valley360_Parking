@@ -28,7 +28,7 @@ const NavbarMenu = [
         link:"/Login",
     },
     {
-        id: 4,
+        id: 5,
         title: "Register",
         link:"/SignUp",
     },
@@ -38,7 +38,7 @@ const NavbarMenu = [
 const Navbar = () => {
   return (
     
-   <nav >
+   <nav className="bg-third/40">
     <motion.div 
     initial={{opacity:0}}
     animate={{opacity:1}}
@@ -53,7 +53,7 @@ const Navbar = () => {
         <LuParkingCircle className='text-green-700'/>
         </div>
 
-        <div className='hidden md:block'>
+        <div className='hidden md:block '>
             <ul className='flex items-center gap-6 text-gray-600'>
                 {NavbarMenu.map((menu)=>(
                     <li key={menu.id} className='text-xl'>

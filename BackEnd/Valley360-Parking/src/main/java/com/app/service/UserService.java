@@ -14,4 +14,10 @@ public interface UserService {
 	void deleteUser(String email);
 	User login(String email, String password);
 	List<UserDTO> findByRole(RoleEnum role);
+	User getById(long id);
+	long countAllOwners();
+	long countAllCustomers();
+	List<User> GetAllOwner();
+	List<User> GetAllCustomers();
+	String Delete(Long id);
 }

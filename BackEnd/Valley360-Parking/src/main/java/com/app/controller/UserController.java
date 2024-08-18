@@ -1,9 +1,12 @@
 package com.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +33,7 @@ public class UserController {
 	@PostMapping("/Register")
 	public ResponseEntity<?> registerUser(@RequestBody UserDTO user) {
 		userService.registerUser(user);
-		return ResponseEntity.status(HttpStatus.CREATED).body("User is created");
+		return ResponseEntity.status(HttpStatus.OK).body("User is created");
 	}
 	
 	@GetMapping("/getByEmail/{email}")
@@ -49,5 +52,28 @@ public class UserController {
         
         return ResponseEntity.ok(user);
     }
+	@GetMapping("/{id}")
+	public User GetById(@PathVariable long id) {
+	System.out.println("in user controller");
+		return userService.getById(id);
+	}
+	@GetMapping("/GetAllOwners")
+	public List<User> GetAllOwners(){
+		List<User> UserList=userService.GetAllOwner();
+		return UserList;
+	}
+	
+	@GetMapping("/GetAllCustomers")
+	public List<User> GetAllCustomers(){
+		List<User> UserList=userService.GetAllCustomers();
+		return UserList;
+	}
+	
+	@DeleteMapping("Delete/{id}")
+	public ResponseEntity<?> DeleteUser(@PathVariable Long id){
+		
+		userService.Delete(id);
+		return ResponseEntity.ok("UserDeleted");
+	}
 	
 }

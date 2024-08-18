@@ -13,12 +13,14 @@ import lombok.Setter;
 public class UserDTO {
 
 	private String email;
+	
 	private String password;
 	private String firstName;
 	private String lastName;
 	private String contact;
 	private String gender;
 	private String address;
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Long roleId;
 	
 	public String getEmail() {
@@ -62,6 +64,12 @@ public class UserDTO {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public Long getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 	
 }

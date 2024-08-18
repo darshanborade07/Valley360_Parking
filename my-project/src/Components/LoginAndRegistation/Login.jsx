@@ -20,7 +20,11 @@ const Login = () => {
         params: {
           email: user.email,
           password: user.password,
-        }
+        },
+          headers: {
+            'Authorization': 'Basic ' + btoa('username:password')
+          }
+        
       });
 
       const loggedInUser = response.data;
@@ -38,9 +42,7 @@ const Login = () => {
       console.error('Login error:', error);
     }
   };
-  const RegisterNow = () => {
-    navigate(`/SignUp`); // Navigate to booking page with Slot ID
-  };
+
 
   return (
     <div

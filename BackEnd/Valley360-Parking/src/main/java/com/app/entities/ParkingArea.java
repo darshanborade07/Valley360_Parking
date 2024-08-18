@@ -1,7 +1,8 @@
 package com.app.entities;
 
 import java.util.Set;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,31 +11,39 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.app.enums.Status;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-//@Getter
-//@Setter
+@Getter
+@Setter
+@ToString
 @Table(name = "parking_area")
-
 public class ParkingArea extends BaseEntity{
-	
+
+	@Column(length = 30,nullable = false)
 	private String area;
-	private String city;
-	private String pincode;
-	private double latitude;
-	private double longitude;
-	@Enumerated(EnumType.STRING)
-	private Status status;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "owner_id")
+	@Column(length = 30,nullable = false)
+	private String city;
+	
+	@Column(length = 30,nullable = false)
+	private String pincode;
+	
+	@Column(nullable = false)
+	private double latitude;
+	
+	@Column(nullable = false)
+	private double longitude;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length = 30,nullable = false)
+	private Status status;
+
+	@OneToOne(fetch = FetchType.EAGER ,cascade = {CascadeType.ALL})
+	@JoinColumn(name = "owner_id", nullable = false)
 	private User user;
 
 	@OneToMany(mappedBy = "parking")
@@ -56,67 +65,5 @@ public class ParkingArea extends BaseEntity{
 		this.parkingSlots = parkingSlots;
 	}
 
-
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Set<ParkingSlot> getParkingSlots() {
-		return parkingSlots;
-	}
-
-	public void setParkingSlots(Set<ParkingSlot> parkingSlots) {
-		this.parkingSlots = parkingSlots;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getPincode() {
-		return pincode;
-	}
-
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}	
-	
 	
 }

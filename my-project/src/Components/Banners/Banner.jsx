@@ -2,8 +2,13 @@ import React from 'react'
 import BannerPng from "../../assets/Banner.png";
 import {motion} from "framer-motion";
 import {FadeUp} from "../Annimations/annimation";
+import { useNavigate } from 'react-router-dom';
 
 const Banner = () => {
+
+  const handleBookNow = () => {
+    navigate('/Login'); // Navigate to booking page with parking ID
+  };
   return (
     <section className='bg-secondary/10'>
 
@@ -40,7 +45,7 @@ const Banner = () => {
         {/* button section */}
         <motion.div variants={FadeUp(1.1)} initial='hidden' animate='visible' 
         className="flex justify-center md:justify-start">
-            <button className='primary-btn'>Know More</button>
+            <button className='primary-btn' onClick={handleBookNow}>Know More</button>
         </motion.div>
         
        </div>
