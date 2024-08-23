@@ -21,6 +21,4 @@ public interface ParkingSlotService {
 	
 	
 	void deleteByAreaID(Long id);
-
-	void DeleteById(Long id);
 }

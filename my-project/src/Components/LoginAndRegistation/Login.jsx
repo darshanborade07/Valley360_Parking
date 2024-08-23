@@ -22,17 +22,19 @@ const Login = () => {
           password: user.password,
         },
           headers: {
-            'Authorization': 'Basic ' + btoa('username:password')
+            'Authorization': 'Bearer ' + btoa('username:password')
           }
         
       });
+      const { token, loggedInUser } = response.data;
 
-      const loggedInUser = response.data;
+      // Store the token and user details in sessionStorage
+      sessionStorage.setItem('jwtToken', token);
       sessionStorage.setItem('user', JSON.stringify(loggedInUser));
       
-      if (loggedInUser.role.roleName === "ROLE_CUSTOMER") {
+      if (loggedInUser.userRoles[0] === "ROLE_CUSTOMER") {
         navigate('/UserDashBoard');
-      } else if (loggedInUser.role.roleName === "ROLE_OWNER") {
+      } else if (loggedInUser.userRoles[0] === "ROLE_OWNER") {
         navigate('/OwnerDashBoard');
       } else {
         console.log('Unrecognized user role.');
@@ -42,7 +44,9 @@ const Login = () => {
       console.error('Login error:', error);
     }
   };
-
+  const RegisterNow = () => {
+    navigate(`/SignUp`); // Navigate to booking page with Slot ID
+  };
 
   return (
     <div

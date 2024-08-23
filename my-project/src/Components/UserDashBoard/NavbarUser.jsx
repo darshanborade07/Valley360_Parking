@@ -1,7 +1,8 @@
 import React from 'react'
 import { LuParkingCircle } from "react-icons/lu";
 import {motion} from 'framer-motion'
-import { useNavigate } from 'react-router-dom';
+
+
 
 
 const NavbarMenu = [
@@ -9,12 +10,12 @@ const NavbarMenu = [
     {
         id: 1,
         title: "Home",
-        link:"/UserDashBoard",
+        link:"/",
     },
     {
         id: 2,
         title: "Profile",
-        link:"/Profile",
+        link:"/Login1",
     },
     
     {
@@ -26,18 +27,10 @@ const NavbarMenu = [
 ];
    
 const NavbarUser = () => {
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        // Clear session storage
-        sessionStorage.removeItem('user'); // Remove the owner's data from session storage
-
-        // Redirect to home page
-        navigate('/');
-    };
+    
   return (
     
-   <nav className='bg-third/40'>
+   <nav >
     <motion.div 
     initial={{opacity:0}}
     animate={{opacity:1}}
@@ -61,14 +54,7 @@ const NavbarUser = () => {
                         >{menu.title}</a>
                         </li>
                     ))}
-                    <li className='text-xl'>
-                            <button
-                                onClick={handleLogout}
-                                className='inline-block py-1 px-3 hover:text-primary hover:shadow-[0_3px_0_-1px_#ef4444] font-semibold'
-                            >
-                                Logout
-                            </button>
-                        </li>
+                    
             </ul>
             
         </div>

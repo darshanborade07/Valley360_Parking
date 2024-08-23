@@ -28,7 +28,7 @@ const OwnersList = () => {
   const handleDelete = async (id) => {
     try {
       console.log({id})
-      const response=await axios.delete(`http://localhost:8080/User/Delete/${id}`);
+      const response=await axios.delete(`http://localhost:8080/Admin/Delete/${id}`);
       toast.success('User deleted successfully');
       // Refresh the list after deletion
       fetchOwners();

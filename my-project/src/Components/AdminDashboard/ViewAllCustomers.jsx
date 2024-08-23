@@ -31,7 +31,7 @@ const CustomersList = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <ToastContainer position="top-center" />
-      <h1 className="text-4xl font-bold mb-6">List of Customers</h1>
+      <h1 className="text-4xl font-bold mb-6">List of Owners</h1>
       {owners.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {owners.map(owner => (

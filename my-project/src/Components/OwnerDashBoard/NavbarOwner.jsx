@@ -11,12 +11,12 @@ const NavbarMenu = [
     {
         id: 1,
         title: "Home",
-        link:"/OwnerDashBoard",
+        link:"/",
     },
     {
         id: 2,
         title: "Profile",
-        link:"/Profile",
+        link:"/Login1",
     },
     
     {
@@ -39,7 +39,7 @@ const NavbarOwner = () => {
 
     const handleLogout = () => {
         // Clear session storage
-        sessionStorage.removeItem('user'); // Remove the owner's data from session storage
+        sessionStorage.removeItem('owner'); // Remove the owner's data from session storage
 
         // Redirect to home page
         navigate('/');
@@ -47,7 +47,7 @@ const NavbarOwner = () => {
 
   return (
     
-   <nav className='bg-third/40'>
+   <nav >
     <motion.div 
     initial={{opacity:0}}
     animate={{opacity:1}}

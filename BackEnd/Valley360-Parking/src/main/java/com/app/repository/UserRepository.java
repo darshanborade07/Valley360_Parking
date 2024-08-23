@@ -11,7 +11,8 @@ import com.app.entities.User;
 import com.app.enums.RoleEnum;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-
+	
+	@Query("select u from User u join fetch u.userRoles where u.email=?1")
 	Optional<User> findByEmail(String email);
 
 	List<User> findByRole(RoleEnum role);

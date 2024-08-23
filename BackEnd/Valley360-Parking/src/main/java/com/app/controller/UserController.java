@@ -1,10 +1,16 @@
 package com.app.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.AuthResponse;
 import com.app.dto.UserDTO;
 import com.app.entities.User;
 import com.app.enums.RoleEnum;
+import com.app.security.CustomUserDetails;
+import com.app.security.JWTUtils;
 import com.app.service.UserService;
 
 @RestController
@@ -29,6 +38,12 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AuthenticationManager authManager;
+	@Autowired
+	private JWTUtils utils;
+	@Autowired
+	private ModelMapper mapper;
 	
 	@PostMapping("/Register")
 	public ResponseEntity<?> registerUser(@RequestBody UserDTO user) {
@@ -48,9 +63,32 @@ public class UserController {
 	
 	@PostMapping("/Login")
 	public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
-        User user = userService.login(email, password);
+		
+		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email,
+				password);
+		Authentication authenticationDetails = authManager.authenticate(authToken);
+		CustomUserDetails customUserDetails = (CustomUserDetails) authenticationDetails.getPrincipal();
+		User user = customUserDetails.getUser();
+		var roleList = authenticationDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+				.collect(Collectors.toSet());
+		AuthResponse authResponse = new AuthResponse();
+		roleList.forEach(role -> {
+			authResponse.getUserRoles().add(RoleEnum.valueOf(role));
+		});
+		authResponse.setJwtToken(utils.generateJwtToken(authenticationDetails));
+		authResponse.setMessage("Authentication Successfull !!");
+//		User user = userService.login(email, password);
+		mapper.map(user, authResponse);
+//		byte profilePictureBlob[] = Files.readAllBytes(Paths.get(user.getProfilePicPath()));
+//		
+//		authResponse.setProfilePicture(profilePictureBlob);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(authResponse);
+		
+		
         
-        return ResponseEntity.ok(user);
+        
+//        return ResponseEntity.ok(user);
     }
 	@GetMapping("/{id}")
 	public User GetById(@PathVariable long id) {

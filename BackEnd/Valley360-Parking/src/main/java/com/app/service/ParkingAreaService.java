@@ -26,6 +26,4 @@ public interface ParkingAreaService {
 	ParkingArea updateParkingArea(Long id, ParkingArea area);
 	
 	void deleteByOwnerid(Long id);
-
-	void DeleteById(Long id);
 }

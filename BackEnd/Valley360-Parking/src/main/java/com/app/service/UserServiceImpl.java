@@ -1,12 +1,18 @@
 package com.app.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +25,11 @@ import com.app.exception.UserAlreadyExistsException;
 import com.app.exception.UserNotFoundException;
 import com.app.repository.RoleRepository;
 import com.app.repository.UserRepository;
+import com.app.security.CustomUserDetails;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -33,8 +40,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ParkingAreaService parkingareaservice;
 	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 //	
 //	@PersistenceContext
 //	private EntityManager entityManager;
@@ -42,8 +49,14 @@ public class UserServiceImpl implements UserService {
 		
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Invalid Email ID !!"));
+		return new CustomUserDetails(user);
+	}
 
-	@Transactional
+	//@Transactional
 	@Override
 	public User registerUser(UserDTO userDTO) {
         // Check if the role exists
@@ -63,9 +76,13 @@ public class UserServiceImpl implements UserService {
               
         // Set the role to the user
         newUser.setRole(role);
-        
+        var persistRole =  roleRepository.findById(userDTO.getRoleId()).orElseThrow();
+        Set<Role> roles = new HashSet<Role>();
+        roles.add(persistRole);
+        newUser.setUserRoles(roles);
+//        newUser.setUserRoles(roles);
         //Encode the user's password
-//        newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
         // Save and return the new user
         return userRepository.save(newUser);
@@ -156,7 +173,7 @@ public class UserServiceImpl implements UserService {
 		System.out.println("in controller");
 		User u=userRepository.findById(id).orElseThrow(()-> new InvalidIdFoundException("Invalid id"));
 		
-		userRepository.delete(u);
+		userRepository.deleteById(id);
 		return "Deleted";
 	}
 		

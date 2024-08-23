@@ -1,52 +1,66 @@
 package com.app.config;
 
-//import java.util.Arrays;
-//import java.util.Collections;
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.web.cors.CorsConfiguration;
-//
-//@Configuration
-//@EnableWebSecurity
-public class SecurityConfig{// extends WebSecurityConfigurerAdapter {
+import javax.servlet.http.HttpServletResponse;
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//            .withUser("admin")
-//            .password(passwordEncoder().encode("admin123"))
-//            .roles("ADMIN");
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//            .csrf().disable()
-//            .authorizeRequests()
-//                .antMatchers("/User/Register").permitAll() // Allow access to /User/Register without authentication
-//                .anyRequest().authenticated()
-//                .and()
-//            .httpBasic()
-//                .and()
-//            .cors().configurationSource(request -> {
-//                CorsConfiguration cors = new CorsConfiguration();
-//                cors.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
-//                cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-//                cors.setAllowedHeaders(Collections.singletonList("*"));
-//                cors.setAllowCredentials(true);
-//                return cors;
-//            });
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.app.security.JWTRequestFilter;
+
+@EnableWebSecurity // mandatory
+@Configuration // mandatory
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig {
+
+	@Autowired
+	private JWTRequestFilter filter;
+	
+	
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().
+		exceptionHandling().
+		authenticationEntryPoint((request, response, ex) -> {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+		}).
+		and().
+		authorizeRequests()
+		 .antMatchers("/User/Register","/Admin/**", "/api/auth/**", "/swagger*/**", "/v*/api-docs/**", "/User/Login").permitAll()
+	      .antMatchers("/User/**").hasAnyRole("OWNER", "CUSTOMER", "ADMIN")
+      //.antMatchers("/Admin/**").hasAnyRole("OWNER", "CUSTOMER", "ADMIN")
+        .antMatchers("/booking/**").hasAnyRole("OWNER", "CUSTOMER", "ADMIN")
+        .antMatchers("/parkingSlots/**").hasAnyRole("ADMIN","CUSTOMER","OWNER")
+        .antMatchers("/parkingArea/**").hasAnyRole("ADMIN","CUSTOMER","OWNER")
+        .antMatchers("/User/Register", "/api/auth/**", "/swagger*/**", "/v*/api-docs/**", "/User/Login").permitAll()
+        .antMatchers(HttpMethod.OPTIONS).permitAll().
+		anyRequest().authenticated().
+		and().
+		sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+		and()
+		.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+
+		return http.build();
+	}
+
+	// configure auth mgr bean : to be used in Authentication REST controller
+	@Bean
+	public AuthenticationManager authenticatonMgr(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
+	}
+
 }

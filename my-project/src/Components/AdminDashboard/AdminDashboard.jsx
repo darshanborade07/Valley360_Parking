@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavbarAdmin from './NavbarAdmin';
 
 const AdminDashboard = () => {
     const [data, setData] = useState({
@@ -27,8 +26,6 @@ const AdminDashboard = () => {
     }, []);
 
     return (
-        <div>
-            <NavbarAdmin/>
         <div className="p-6 bg-gray-100 min-h-screen">
             <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -46,7 +43,6 @@ const AdminDashboard = () => {
                     <Button href="/admin/customers">Manage Customers</Button>
                 </div>
             </div>
-        </div>
         </div>
     );
 };

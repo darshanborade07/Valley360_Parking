@@ -63,6 +63,7 @@ const UserDashboard = () => {
   return (
     <div>
       <NavbarUser />
+      <div className="bg-[url('/src/Images/bg.jpg')] bg-center bg-cover bg-no-repeat h-[100vh] w-screen relative flex">
         <div className="min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white p-6">
           <ToastContainer position="top-center" />
           <div className="container mx-auto">
@@ -91,7 +92,7 @@ const UserDashboard = () => {
           </div>
         </div>
       </div>
-    
+    </div>
   );
 };
 

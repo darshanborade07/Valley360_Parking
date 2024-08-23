@@ -18,6 +18,9 @@ const Login1 = () => {
             params: {
                 email: user.email,
                 password: user.password
+            },
+            headers: {
+              'Authorization': 'Bearer ' + btoa('username:password')
             }
         })
             .then(response => {

@@ -27,7 +27,7 @@ public class ParkingSlotController {
 	
 	@PostMapping("/Add")
 	public ResponseEntity<?> addParkingSlot(@RequestBody ParkingSlotDTO parkingSlot){
-		System.out.println("in service");
+		
 		parkingSlotService.addNewParkingSlot(parkingSlot);
 		return ResponseEntity.status(HttpStatus.OK).body("Parking slot added !!");
 	}

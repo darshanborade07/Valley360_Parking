@@ -1,8 +1,8 @@
 package com.app.entities;
 
 import java.util.Set;
+
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,39 +11,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import com.app.enums.Status;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
-@Getter
-@Setter
-@ToString
+//@Getter
+//@Setter
 @Table(name = "parking_area")
+
 public class ParkingArea extends BaseEntity{
-
-	@Column(length = 30,nullable = false)
+	
 	private String area;
-	
-	@Column(length = 30,nullable = false)
 	private String city;
-	
-	@Column(length = 30,nullable = false)
 	private String pincode;
-	
-	@Column(nullable = false)
 	private double latitude;
-	
-	@Column(nullable = false)
 	private double longitude;
-	
 	@Enumerated(EnumType.STRING)
-	@Column(length = 30,nullable = false)
 	private Status status;
-
-	@OneToOne(fetch = FetchType.EAGER ,cascade = {CascadeType.ALL})
-	@JoinColumn(name = "owner_id", nullable = false)
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "owner_id")
 	private User user;
 
 	@OneToMany(mappedBy = "parking")
@@ -64,6 +54,69 @@ public class ParkingArea extends BaseEntity{
 		this.status = status;
 		this.parkingSlots = parkingSlots;
 	}
+	public String getArea() {
+		return area;
+	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<ParkingSlot> getParkingSlots() {
+		return parkingSlots;
+	}
+
+	public void setParkingSlots(Set<ParkingSlot> parkingSlots) {
+		this.parkingSlots = parkingSlots;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+	
 	
 }

@@ -38,6 +38,7 @@ const NavbarMenu = [
 const Navbar = () => {
   return (
     
+    
    <nav className="bg-third/40">
     <motion.div 
     initial={{opacity:0}}

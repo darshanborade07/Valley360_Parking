@@ -8,7 +8,7 @@ import Hero from './Components/Hero/Hero';
 import Banner from './Components/Banners/Banner';
 import Banner2 from './Components/Banners/Banner2';
 import Footer from './Components/Footer/Footer';
-import Registration from './Components/LoginAndRegistation/Registration';
+import Registation from './Components/LoginAndRegistation/Registation';
 import Login1 from './Components/LoginAndRegistation/Login1';
 import Login from './Components/LoginAndRegistation/Login';
 import ParkingSlotForm from './Components/OwnerDashBoard/AddParkingSlot';
@@ -46,7 +46,7 @@ function App() {
             <Footer />
           </main>
         } />
-        <Route path="/SignUp" element={<Registration />} />
+        <Route path="/SignUp" element={<Registation />} />
         <Route path="/AddParking" element={<ParkingSlotForm />} />
         <Route path="/UserDashBoard" element={<UserDashboard />} />
         <Route path="/ViewSlots/:parkingId" element={<ViewSlots />} />

@@ -30,6 +30,7 @@ public class ParkingAreaController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> addParkingArea(@RequestBody ParkingAreaDTO parking){
+		
 		ParkingArea area = parkingAreaService.addParkingArea(parking);
 		return ResponseEntity.status(HttpStatus.OK).body(area);
 	}

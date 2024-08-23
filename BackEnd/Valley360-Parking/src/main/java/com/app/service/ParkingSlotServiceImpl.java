@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.dto.ParkingSlotDTO;
 import com.app.entities.ParkingArea;
 import com.app.entities.ParkingSlot;
-import com.app.exception.InvalidIdFoundException;
 import com.app.exception.UserNotFoundException;
 import com.app.repository.ParkingAreaRepository;
 import com.app.repository.ParkingSlotRepository;
@@ -116,15 +115,6 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
 			System.out.println("In delete Slot");
 		parkingSlotRepository.deleteByParkingId(id);
 		}
-	}
-
-	@Override
-	public void DeleteById(Long id) {
-		ParkingSlot slot = parkingSlotRepository.findById(id).orElseThrow(() -> new InvalidIdFoundException("Invalid id !!!"));
-		
-		bookingservice.DeleteBySlotId(slot.getId());
-		
-		parkingSlotRepository.delete(slot);
 	}
 
 
